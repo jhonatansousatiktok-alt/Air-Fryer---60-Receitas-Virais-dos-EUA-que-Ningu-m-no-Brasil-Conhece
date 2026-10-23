@@ -37,20 +37,20 @@ export const FavoritesView: React.FC<FavoritesViewProps> = ({
   if (favoriteRecipes.length === 0) {
     return (
       <div className="max-w-3xl mx-auto py-16 px-4 text-center animate-fadeIn">
-        <div className="w-20 h-20 mx-auto rounded-3xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-rose-500 mb-6 shadow-xl shadow-rose-950/20">
+        <div className="w-20 h-20 mx-auto rounded-3xl bg-white border border-[#E8DFD5] flex items-center justify-center text-rose-500 mb-6 shadow-md shadow-rose-900/5">
           <Heart className="w-10 h-10 stroke-[1.5]" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Você ainda não tem favoritos salvos</h2>
-        <p className="text-neutral-400 max-w-md mx-auto mb-8 text-sm leading-relaxed">
-          Navegue pelas 60 receitas e clique no ícone de coração para salvar os pratos que você mais deseja fazer na sua Air Fryer!
+        <h2 className="font-serif text-3xl font-bold text-[#0F2942] mb-2">Você ainda não tem favoritos salvos</h2>
+        <p className="text-[#64748B] max-w-md mx-auto mb-8 text-sm leading-relaxed">
+          Navegue pelas 60 receitas virais e clique no ícone de coração para salvar os pratos que você mais deseja fazer na sua Air Fryer!
         </p>
 
         <button
           onClick={onExploreRecipes}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold bg-amber-500 hover:bg-amber-400 text-neutral-950 shadow-lg shadow-amber-500/20 transition active:scale-95"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-[#C8521A] hover:bg-[#B34514] text-white shadow-md shadow-[#C8521A]/20 transition active:scale-95 text-sm"
         >
-          <Sparkles className="w-5 h-5" />
-          Ver 60 Receitas Virais
+          <Sparkles className="w-4 h-4" />
+          Ver 60 Receitas do Livro
         </button>
       </div>
     );
@@ -58,23 +58,23 @@ export const FavoritesView: React.FC<FavoritesViewProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 bg-neutral-900 border border-neutral-800 rounded-2xl p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 bg-white border border-[#E8DFD5] rounded-3xl p-6 shadow-sm">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <Heart className="w-6 h-6 text-rose-500 fill-rose-500" />
-            <h2 className="text-2xl font-black text-white">Meus Pratos Favoritos</h2>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0F2942]">Meus Pratos Favoritos</h2>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-rose-600 border border-rose-200">
               {favoriteRecipes.length} receitas
             </span>
           </div>
-          <p className="text-xs text-neutral-400 mt-1">
-            Seu livro pessoal de pratos preferidos da Air Fryer.
+          <p className="text-xs text-[#64748B] mt-1">
+            Seu livro pessoal de pratos preferidos com cronômetros e ingredientes prontos.
           </p>
         </div>
 
         <button
           onClick={handleAddAllFavoritesToCart}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-neutral-800 hover:bg-neutral-750 text-emerald-400 border border-emerald-500/40 transition active:scale-95 shadow-md"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#3D5A3C] hover:bg-[#324B31] text-white transition active:scale-95 shadow-md shadow-[#3D5A3C]/15"
         >
           {addedAll ? (
             <>

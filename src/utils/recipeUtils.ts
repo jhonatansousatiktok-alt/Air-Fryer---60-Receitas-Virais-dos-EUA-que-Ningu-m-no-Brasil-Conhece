@@ -177,23 +177,48 @@ export function formatTimerDisplay(seconds: number): string {
   return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
+export interface FilterRecipesOptions {
+  query?: string;
+  search?: string;
+  category?: string;
+  maxTime?: number;
+  sortBy?: 'recommended' | 'time' | 'rating';
+}
+
 /**
  * Filter and search recipes
  */
 export function filterRecipes(
   recipes: Recipe[],
-  query: string,
-  category: string,
-  maxTime?: number,
-  sortBy: 'recommended' | 'time' | 'rating' = 'recommended'
+  queryOrOptions: string | FilterRecipesOptions,
+  categoryArg?: string,
+  maxTimeArg?: number,
+  sortByArg: 'recommended' | 'time' | 'rating' = 'recommended'
 ): Recipe[] {
+  let query = '';
+  let category = 'todos';
+  let maxTime: number | undefined = undefined;
+  let sortBy: 'recommended' | 'time' | 'rating' = 'recommended';
+
+  if (typeof queryOrOptions === 'object' && queryOrOptions !== null) {
+    query = queryOrOptions.query || queryOrOptions.search || '';
+    category = queryOrOptions.category || 'todos';
+    maxTime = queryOrOptions.maxTime;
+    sortBy = queryOrOptions.sortBy || 'recommended';
+  } else {
+    query = typeof queryOrOptions === 'string' ? queryOrOptions : '';
+    category = categoryArg || 'todos';
+    maxTime = maxTimeArg;
+    sortBy = sortByArg || 'recommended';
+  }
+
   let filtered = [...recipes];
 
   if (category && category !== 'todos') {
     filtered = filtered.filter((r) => r.category === category);
   }
 
-  if (query.trim()) {
+  if (query && query.trim()) {
     const q = query.toLowerCase().trim();
     filtered = filtered.filter(
       (r) =>

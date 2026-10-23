@@ -25,19 +25,19 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({
   if (reviewedList.length === 0) {
     return (
       <div className="max-w-3xl mx-auto py-16 px-4 text-center animate-fadeIn">
-        <div className="w-20 h-20 mx-auto rounded-3xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-amber-500 mb-6 shadow-xl shadow-amber-950/20">
-          <Star className="w-10 h-10 stroke-[1.5] fill-amber-500/20" />
+        <div className="w-20 h-20 mx-auto rounded-3xl bg-white border border-[#E8DFD5] flex items-center justify-center text-[#E59819] mb-6 shadow-md shadow-amber-900/5">
+          <Star className="w-10 h-10 stroke-[1.5] fill-[#E59819]/20" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Você ainda não avaliou nenhum prato</h2>
-        <p className="text-neutral-400 max-w-md mx-auto mb-8 text-sm leading-relaxed">
+        <h2 className="font-serif text-3xl font-bold text-[#0F2942] mb-2">Você ainda não avaliou nenhum prato</h2>
+        <p className="text-[#64748B] max-w-md mx-auto mb-8 text-sm leading-relaxed">
           Depois de preparar uma receita na Air Fryer, abra os detalhes dela para deixar sua nota com estrelas e registrar seus segredos, pontos de cozimento e notas de chef!
         </p>
 
         <button
           onClick={onExploreRecipes}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold bg-amber-500 hover:bg-amber-400 text-neutral-950 shadow-lg shadow-amber-500/20 transition active:scale-95"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-[#C8521A] hover:bg-[#B34514] text-white shadow-md shadow-[#C8521A]/20 transition active:scale-95 text-sm"
         >
-          <Sparkles className="w-5 h-5" />
+          <Sparkles className="w-4 h-4" />
           Escolher uma Receita para Avaliar
         </button>
       </div>
@@ -51,25 +51,25 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 animate-fadeIn">
       {/* Header bar */}
-      <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+      <div className="bg-white border border-[#E8DFD5] rounded-3xl p-6 sm:p-7 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div>
           <div className="flex items-center gap-2.5">
-            <Star className="w-6 h-6 text-amber-400 fill-amber-400" />
-            <h2 className="text-2xl font-black text-white">Minhas Avaliações & Notas de Chef</h2>
+            <Star className="w-6 h-6 text-[#E59819] fill-[#E59819]" />
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0F2942]">Minhas Avaliações & Notas de Chef</h2>
           </div>
-          <p className="text-xs text-neutral-400 mt-1">
-            Seu diário culinário com notas e adaptações de cada prato.
+          <p className="text-xs text-[#64748B] mt-1">
+            Seu diário culinário pessoal com adaptações e notas de cada prato preparado.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 bg-neutral-850 border border-neutral-750 px-4 py-2 rounded-xl self-start sm:self-auto">
-          <div className="flex items-center gap-1">
-            <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span className="font-bold text-lg text-white">{averageUserRating}</span>
+        <div className="flex items-center gap-3 bg-[#FAF5EE] border border-[#E5DACD] px-4 py-2.5 rounded-2xl self-start sm:self-auto">
+          <div className="flex items-center gap-1.5">
+            <Star className="w-5 h-5 text-[#E59819] fill-[#E59819]" />
+            <span className="font-bold text-xl text-[#0F2942]">{averageUserRating}</span>
           </div>
-          <div className="border-l border-neutral-700 pl-3">
-            <span className="text-[11px] text-neutral-400 block font-medium">Média das suas notas</span>
-            <span className="text-xs font-semibold text-amber-400">{reviewedList.length} receitas avaliadas</span>
+          <div className="border-l border-[#DFCDBA] pl-3">
+            <span className="text-[11px] text-[#64748B] block font-medium">Média das suas notas</span>
+            <span className="text-xs font-bold text-[#C8521A]">{reviewedList.length} receitas avaliadas</span>
           </div>
         </div>
       </div>
@@ -80,19 +80,19 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({
           <div
             key={recipe.id}
             onClick={() => onOpenRecipe(recipe)}
-            className="group bg-neutral-900 border border-neutral-800 hover:border-amber-500/50 rounded-2xl p-5 shadow-lg transition cursor-pointer flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between"
+            className="group bg-white border border-[#E8DFD5] hover:border-[#C8521A]/50 rounded-3xl p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)] hover:shadow-md transition cursor-pointer flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between"
           >
             <div className="flex gap-4 items-center">
               <img
                 src={recipe.image}
                 alt={recipe.title}
-                className="w-20 h-20 rounded-xl object-cover border border-neutral-800 shrink-0"
+                className="w-20 h-20 rounded-2xl object-cover border border-[#E8DFD5] shrink-0"
               />
               <div>
-                <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+                <span className="text-[11px] font-bold text-[#C8521A] uppercase tracking-wider">
                   #{recipe.id} • {recipe.chapterTitle.split('-')[0]}
                 </span>
-                <h3 className="font-bold text-white text-base group-hover:text-amber-400 transition">
+                <h3 className="font-serif font-bold text-[#0F2942] text-lg group-hover:text-[#C8521A] transition leading-snug">
                   {recipe.title}
                 </h3>
                 
@@ -103,31 +103,31 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({
                       <Star
                         key={s}
                         className={`w-3.5 h-3.5 ${
-                          s <= review.rating ? 'text-amber-400 fill-amber-400' : 'text-neutral-700'
+                          s <= review.rating ? 'text-[#E59819] fill-[#E59819]' : 'text-[#CBD5E1]'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-xs font-bold text-neutral-200">
+                  <span className="text-xs font-bold text-[#0F2942]">
                     {review.rating}/5 estrelas
                   </span>
                 </div>
 
                 {/* Notes if any */}
                 {review.notes && (
-                  <p className="text-xs text-neutral-400 mt-2 bg-neutral-850 p-2.5 rounded-lg border border-neutral-800 italic line-clamp-2">
+                  <p className="text-xs text-[#526071] mt-2 bg-[#FAF5EE] p-3 rounded-xl border border-[#ECE0D3] italic line-clamp-2">
                     &quot;{review.notes}&quot;
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 self-end sm:self-center">
+            <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
               <button
-                className="flex items-center gap-1 text-xs font-semibold text-neutral-400 group-hover:text-amber-400 transition"
+                className="flex items-center gap-1 text-xs font-bold text-[#0F2942] group-hover:text-[#C8521A] transition"
               >
-                <span>Editar / Ver Receita</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Ver Receita</span>
+                <ArrowRight className="w-4 h-4 text-[#C8521A]" />
               </button>
             </div>
           </div>

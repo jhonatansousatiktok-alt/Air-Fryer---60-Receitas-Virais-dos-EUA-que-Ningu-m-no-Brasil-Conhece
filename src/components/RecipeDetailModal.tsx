@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   X, Heart, Share2, Timer, ShoppingBag, Plus, Minus, Check, 
   Star, Thermometer, Clock, Users, Lightbulb, Play, MessageSquare, 
-  Sparkles, ChefHat, CheckCircle2 
+  Sparkles, ChefHat, CheckCircle2, AlertCircle, Info, Leaf
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Recipe, UserReview } from '../types/recipe';
@@ -91,21 +91,26 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
     setTimeout(() => setSavedNoteMessage(false), 3000);
   };
 
+  // Why it matters scientific note per recipe (matching Screenshot 2 "POR QUE ISSO É IMPORTANTE?")
+  const scientificWhyItMatters = recipe.chefTip.length > 50 
+    ? recipe.chefTip 
+    : `O fluxo de ar quente a ${recipe.temperature}°C desidrata a superfície instantaneamente, criando a reação de Maillard que doura o alimento enquanto preserva a maciez suculenta no interior.`;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fadeIn">
       <div 
-        className="relative w-full max-w-4xl bg-neutral-900 border border-neutral-750 rounded-3xl shadow-2xl overflow-hidden my-auto text-neutral-100 max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-4xl bg-[#FCFAF7] border border-[#E8DFD3] rounded-3xl shadow-2xl overflow-hidden my-auto text-[#1E293B] max-h-[92vh] flex flex-col"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-recipe-title"
       >
-        {/* Sticky Header with Close button & Actions */}
-        <div className="sticky top-0 z-30 flex items-center justify-between px-6 py-4 bg-neutral-900/90 backdrop-blur-md border-b border-neutral-800">
-          <div className="flex items-center gap-2 truncate pr-4">
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold shrink-0">
+        {/* Top Editorial Nav Header */}
+        <div className="sticky top-0 z-30 flex items-center justify-between px-6 py-4 bg-white/95 backdrop-blur-md border-b border-[#EBE3D7]">
+          <div className="flex items-center gap-2.5 truncate pr-4">
+            <span className="px-2.5 py-0.5 rounded-md bg-[#FAF0E7] text-[#C8521A] text-xs font-bold border border-[#E9D0C1] shrink-0">
               #{recipe.id}
             </span>
-            <span className="text-xs text-neutral-400 truncate">
+            <span className="text-xs font-semibold text-[#64748B] truncate">
               {recipe.chapterTitle}
             </span>
           </div>
@@ -114,7 +119,7 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
             <button
               onClick={() => onShare(recipe)}
               aria-label="Compartilhar esta receita"
-              className="p-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition"
+              className="p-2 rounded-xl bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#475569] hover:text-[#0F2942] border border-[#E5DACD] transition"
               title="Compartilhar"
             >
               <Share2 className="w-4 h-4" />
@@ -123,10 +128,10 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
             <button
               onClick={() => onToggleFavorite(recipe.id)}
               aria-label={isFavorite ? 'Remover dos favoritos' : 'Salvar nos favoritos'}
-              className={`p-2 rounded-xl transition ${
+              className={`p-2 rounded-xl transition border ${
                 isFavorite
-                  ? 'bg-rose-500 text-white'
-                  : 'bg-neutral-800 text-neutral-300 hover:text-rose-400 hover:bg-neutral-700'
+                  ? 'bg-rose-500 text-white border-rose-500'
+                  : 'bg-[#FAF5EE] text-[#475569] hover:text-rose-500 hover:bg-rose-50 border-[#E5DACD]'
               }`}
               title={isFavorite ? 'Favoritada' : 'Favoritar'}
             >
@@ -136,332 +141,380 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
             <button
               onClick={onClose}
               aria-label="Fechar detalhes da receita"
-              className="p-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white transition"
+              className="p-2 rounded-xl bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#64748B] hover:text-[#0F2942] border border-[#E5DACD] transition"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        {/* Scrollable Content */}
-        <div className="overflow-y-auto flex-1 divide-y divide-neutral-800">
-          {/* Hero Section with Real Photo */}
-          <div className="relative aspect-[21/9] sm:aspect-[21/8] w-full bg-neutral-950 overflow-hidden">
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
-            
-            <div className="absolute bottom-4 left-6 right-6">
-              <div className="flex flex-wrap gap-1.5 mb-2">
-                {recipe.tags.map((t) => (
-                  <span key={t} className="px-2.5 py-0.5 rounded-full bg-neutral-950/70 backdrop-blur-md text-amber-300 text-xs font-semibold border border-neutral-700">
-                    {t}
-                  </span>
-                ))}
+        {/* Scrollable Editorial Content */}
+        <div className="overflow-y-auto flex-1 p-6 sm:p-8 space-y-8 divide-y divide-[#EFE7DC]">
+          
+          {/* Section 1: Editorial Title & Introductory Paragraph (Matching Screenshot 1) */}
+          <div className="space-y-4">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#8A4A28] mb-1">
+                <span>Capítulo {recipe.chapter}</span>
+                <span>•</span>
+                <span>{recipe.difficulty}</span>
               </div>
-              <h1 id="modal-recipe-title" className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                {recipe.title}
+              
+              <h1 id="modal-recipe-title" className="font-serif text-3xl sm:text-4xl font-extrabold text-[#0F2942] leading-tight">
+                {recipe.id}. {recipe.title}:
               </h1>
-              <p className="text-sm text-neutral-300 mt-1 max-w-2xl">
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-[#C8521A] mt-1 leading-snug">
                 {recipe.subtitle}
               </p>
             </div>
-          </div>
 
-          {/* Quick Info & Timer launch bar */}
-          <div className="p-6 grid grid-cols-2 sm:grid-cols-4 gap-4 bg-neutral-900/60">
-            <div className="bg-neutral-850/80 p-3 rounded-2xl border border-neutral-800 flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-400">
-                <Thermometer className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-neutral-400 font-semibold block">Temperatura</span>
-                <span className="text-lg font-bold text-white">{recipe.temperature}°C</span>
-              </div>
+            {/* Small decorative line with accent dot */}
+            <div className="flex items-center gap-2 py-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#C8521A] shrink-0" />
+              <div className="h-[1.5px] bg-[#E8DFD5] w-full" />
             </div>
 
-            <div className="bg-neutral-850/80 p-3 rounded-2xl border border-neutral-800 flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-orange-500/20 text-orange-400">
-                <Clock className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-neutral-400 font-semibold block">Air Fryer</span>
-                <span className="text-lg font-bold text-white">{recipe.airFryerTime}</span>
-              </div>
-            </div>
+            <p className="text-[#374151] text-sm sm:text-base leading-relaxed">
+              Esqueça as receitas complicadas. Esta preparação viral foi testada e adaptada para garantir máxima crocância por fora e textura macia e suculenta por dentro, extraindo 100% da tecnologia de convecção da sua Air Fryer.
+            </p>
 
-            <div className="bg-neutral-850/80 p-3 rounded-2xl border border-neutral-800 flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-blue-500/20 text-blue-400">
-                <ChefHat className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-neutral-400 font-semibold block">Preparo Prévio</span>
-                <span className="text-lg font-bold text-white">{recipe.prepTime}</span>
-              </div>
-            </div>
-
-            {/* Direct Timer Starter */}
-            <button
-              onClick={() => onStartTimer(recipe, recipe.airFryerTimeMinutes, `Cozinhando ${recipe.title}`)}
-              className="bg-gradient-to-br from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white p-3 rounded-2xl shadow-lg shadow-orange-950/40 flex items-center justify-center gap-2.5 font-bold text-sm transition active:scale-95 group text-left"
-            >
-              <Timer className="w-5 h-5 group-hover:rotate-12 transition-transform shrink-0" />
-              <div>
-                <span className="block text-[10px] text-amber-100 font-normal">Iniciar</span>
-                <span>Timer ({recipe.airFryerTimeMinutes}m)</span>
-              </div>
-            </button>
-          </div>
-
-          {/* Servings Scaler & Ingredients */}
-          <div className="p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-              <div>
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  <ShoppingBag className="w-5 h-5 text-amber-400" />
-                  Ingredientes Necessários
-                </h2>
-                <p className="text-xs text-neutral-400 mt-0.5">
-                  Ajuste o rendimento para recalcular as medidas automaticamente.
-                </p>
-              </div>
-
-              {/* Servings Adjuster */}
-              <div className="flex items-center gap-3 bg-neutral-800 border border-neutral-700 px-3 py-1.5 rounded-xl self-start sm:self-auto">
-                <span className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-amber-400" />
-                  Porções:
-                </span>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setServings((s) => Math.max(1, s - 1))}
-                    aria-label="Diminuir porções"
-                    className="p-1 rounded-lg bg-neutral-700 hover:bg-neutral-600 text-neutral-200 transition"
-                  >
-                    <Minus className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="w-6 text-center font-bold text-amber-400 text-sm">
-                    {servings}
-                  </span>
-                  <button
-                    onClick={() => setServings((s) => s + 1)}
-                    aria-label="Aumentar porções"
-                    className="p-1 rounded-lg bg-neutral-700 hover:bg-neutral-600 text-neutral-200 transition"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                  </button>
+            {/* Info Strip (Matching Screenshot 1) */}
+            <div className="bg-[#F7F2EA] border border-[#E5DACB] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-white text-[#C8521A] shadow-xs">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold text-[#64748B] block uppercase tracking-wider">Tempo de preparo:</span>
+                  <span className="font-bold text-[#0F2942] text-sm sm:text-base">{recipe.prepTime}</span>
                 </div>
               </div>
-            </div>
 
-            {/* Ingredients Checkboxes */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 my-4">
-              {recipe.ingredients.map((ing, idx) => {
-                const scaled = scaleIngredient(ing, recipe.servings, servings);
-                const isChecked = !!checkedIngredients[idx];
+              <div className="h-8 w-[1px] bg-[#DFCDBA] hidden sm:block" />
 
-                return (
-                  <label
-                    key={idx}
-                    className={`flex items-start gap-3 p-3 rounded-xl border transition cursor-pointer ${
-                      isChecked
-                        ? 'bg-neutral-850 border-neutral-750 text-neutral-200'
-                        : 'bg-neutral-900/60 border-neutral-850 text-neutral-500'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onChange={() => toggleIngredient(idx)}
-                      className="w-4 h-4 mt-0.5 rounded border-neutral-700 text-amber-500 focus:ring-amber-500/40 bg-neutral-800 shrink-0"
-                    />
-                    <span className="text-sm leading-snug">{scaled}</span>
-                  </label>
-                );
-              })}
-            </div>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-white text-[#C8521A] shadow-xs">
+                  <Thermometer className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold text-[#64748B] block uppercase tracking-wider">Air Fryer:</span>
+                  <span className="font-bold text-[#0F2942] text-sm sm:text-base">{recipe.airFryerTime} a {recipe.temperature}°C</span>
+                </div>
+              </div>
 
-            {/* Add to Shopping List Button */}
-            <div className="flex items-center gap-3 mt-4">
+              <div className="h-8 w-[1px] bg-[#DFCDBA] hidden sm:block" />
+
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-white text-[#C8521A] shadow-xs">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold text-[#64748B] block uppercase tracking-wider">Rendimento:</span>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <button
+                      onClick={() => setServings((s) => Math.max(1, s - 1))}
+                      aria-label="Diminuir porções"
+                      className="w-5 h-5 rounded bg-white hover:bg-[#EBE3D7] text-[#0F2942] flex items-center justify-center font-bold text-xs shadow-xs"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </button>
+                    <span className="font-bold text-[#0F2942] text-sm px-1 min-w-[20px] text-center">{servings}</span>
+                    <button
+                      onClick={() => setServings((s) => s + 1)}
+                      aria-label="Aumentar porções"
+                      className="w-5 h-5 rounded bg-white hover:bg-[#EBE3D7] text-[#0F2942] flex items-center justify-center font-bold text-xs shadow-xs"
+                    >
+                      <Plus className="w-3 h-3" />
+                    </button>
+                    <span className="text-xs text-[#64748B] ml-1">{recipe.servingsUnit}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Direct Timer Starter */}
               <button
-                onClick={handleAddIngredientsToShopping}
-                className="flex items-center gap-2 py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-amber-500 hover:bg-amber-400 text-neutral-950 transition active:scale-95 shadow-lg shadow-amber-500/20"
+                onClick={() => onStartTimer(recipe, recipe.airFryerTimeMinutes, `Assando ${recipe.title}`)}
+                className="ml-auto w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#C8521A] hover:bg-[#B34514] text-white shadow-md shadow-[#C8521A]/20 transition active:scale-95"
               >
-                {addedToListNotification ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-950" />
-                    Adicionado à Lista de Compras!
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag className="w-4 h-4" />
-                    Adicionar Ingredientes Selecionados à Lista de Compras
-                  </>
-                )}
+                <Timer className="w-4 h-4" />
+                <span>Iniciar Timer ({recipe.airFryerTimeMinutes}m)</span>
               </button>
             </div>
           </div>
 
-          {/* Preparation Steps */}
-          <div className="p-6">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2 mb-1">
-              <ChefHat className="w-5 h-5 text-amber-400" />
-              Modo de Preparo Passo a Passo
-            </h2>
-            <p className="text-xs text-neutral-400 mb-4">
-              Clique nos passos conforme for preparando para acompanhar seu progresso!
-            </p>
+          {/* Section 2: Ingredients & Real Photo with Circular Badge (Matching Screenshot 1) */}
+          <div className="pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left: Ingredients Box */}
+            <div className="lg:col-span-5 bg-white border border-[#E8DFD5] rounded-3xl p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)] space-y-4">
+              <div className="flex items-center justify-between border-b border-[#F0E7DC] pb-3">
+                <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#0F2942]">
+                  Ingredientes:
+                </h2>
+                <span className="text-xs font-semibold text-[#8A4A28] bg-[#FBF3EB] px-2.5 py-1 rounded-full border border-[#EED7C4]">
+                  {servings} {recipe.servingsUnit}
+                </span>
+              </div>
 
-            <div className="space-y-3">
-              {recipe.steps.map((step, idx) => {
-                const isCompleted = completedSteps.includes(idx);
+              {/* Ingredients List with warm terracotta bullets */}
+              <ul className="space-y-3">
+                {recipe.ingredients.map((ing, idx) => {
+                  const scaled = scaleIngredient(ing, recipe.servings, servings);
+                  const isChecked = !!checkedIngredients[idx];
 
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => toggleStep(idx)}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex gap-4 ${
-                      isCompleted
-                        ? 'bg-neutral-900 border-neutral-800 text-neutral-500'
-                        : 'bg-neutral-850 border-neutral-750 text-neutral-200 hover:border-amber-500/40'
-                    }`}
-                  >
-                    <div className="shrink-0 pt-0.5">
-                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition ${
+                  return (
+                    <li 
+                      key={idx}
+                      onClick={() => toggleIngredient(idx)}
+                      className="flex items-start gap-2.5 text-sm sm:text-base text-[#334155] cursor-pointer group"
+                    >
+                      <span className={`w-2 h-2 rounded-full mt-2 shrink-0 transition-colors ${
+                        isChecked ? 'bg-[#C8521A]' : 'bg-[#CBD5E1]'
+                      }`} />
+                      <span className={`leading-snug transition ${
+                        isChecked ? 'text-[#1E293B] font-medium' : 'text-[#94A3B8] line-through'
+                      }`}>
+                        {scaled}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Add to shopping list button */}
+              <button
+                onClick={handleAddIngredientsToShopping}
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm bg-[#3D5A3C] hover:bg-[#324B31] text-white transition active:scale-95 shadow-md shadow-[#3D5A3C]/15 mt-2"
+              >
+                {addedToListNotification ? (
+                  <>
+                    <Check className="w-4 h-4 text-white" />
+                    <span>Adicionado à Lista de Compras!</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Adicionar à Lista de Compras</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Right: High-Res Real Photo with Circular Dark Stamp Badge */}
+            <div className="lg:col-span-7 relative">
+              <div className="relative rounded-3xl overflow-hidden shadow-lg border border-[#E5DACD] bg-[#FAF5EE] aspect-[4/3]">
+                <img
+                  src={recipe.image}
+                  alt={recipe.title}
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Dark Navy Circular Stamp (Matching Screenshot 1) */}
+                <div className="absolute top-4 right-4 w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-[#0F2942]/95 backdrop-blur-xs text-white p-2.5 flex flex-col items-center justify-center text-center shadow-xl border-2 border-white/20 transform rotate-6 hover:rotate-0 transition-transform">
+                  <span className="text-[10px] font-black tracking-widest text-[#E2692D] uppercase">
+                    CROCANTE
+                  </span>
+                  <span className="text-[11px] sm:text-xs font-black uppercase leading-tight mt-0.5">
+                    POR FORA,
+                  </span>
+                  <span className="text-[9px] font-bold text-neutral-300 uppercase leading-none mt-1">
+                    SURPREENDENTE
+                  </span>
+                  <span className="text-[10px] font-extrabold text-[#E2692D] uppercase leading-tight">
+                    POR DENTRO!
+                  </span>
+                </div>
+
+                {/* Bottom Photo Metadata Caption */}
+                <div className="absolute bottom-3 left-3 right-3 bg-white/90 backdrop-blur-md rounded-xl p-2.5 text-xs text-[#0F2942] font-semibold flex items-center justify-between border border-white/80 shadow-sm">
+                  <span>Foto real da receita testada</span>
+                  <span className="text-[#C8521A] font-bold">Temperatura Ideal: {recipe.temperature}°C</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 3: Modo de Preparo (Matching Screenshot 1) */}
+          <div className="pt-8 space-y-4">
+            <div className="bg-white border border-[#E8DFD5] rounded-3xl p-6 sm:p-8 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)]">
+              <h2 className="font-serif text-2xl font-bold text-[#0F2942] mb-1">
+                Modo de Preparo:
+              </h2>
+              <p className="text-xs text-[#64748B] mb-6">
+                Clique nos passos para marcar como concluído durante a execução na cozinha.
+              </p>
+
+              <div className="space-y-4">
+                {recipe.steps.map((step, idx) => {
+                  const isCompleted = completedSteps.includes(idx);
+
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => toggleStep(idx)}
+                      className={`flex items-start gap-4 p-4 rounded-2xl border transition-all cursor-pointer ${
                         isCompleted
-                          ? 'bg-emerald-600 text-white'
-                          : 'bg-neutral-750 text-amber-400'
+                          ? 'bg-[#F2F7F1] border-[#CDE0CC]'
+                          : 'bg-[#FCFAF7] border-[#ECE3D7] hover:border-[#C8521A]/40'
+                      }`}
+                    >
+                      {/* Orange solid circle with step number */}
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0 transition-all ${
+                        isCompleted
+                          ? 'bg-[#3D5A3C] text-white shadow-xs'
+                          : 'bg-[#C8521A] text-white shadow-xs'
                       }`}>
                         {isCompleted ? <Check className="w-4 h-4" /> : idx + 1}
                       </div>
+
+                      <div className="flex-1">
+                        <p className={`text-sm sm:text-base leading-relaxed ${
+                          isCompleted ? 'text-[#3D5A3C] line-through font-medium' : 'text-[#1E293B]'
+                        }`}>
+                          {step}
+                        </p>
+                      </div>
                     </div>
-
-                    <div className="flex-1">
-                      <p className={`text-sm leading-relaxed ${isCompleted ? 'line-through' : ''}`}>
-                        {step}
-                      </p>
-
-                      {/* Step specific timer helpers */}
-                      {step.toLowerCase().includes('pré-aqueça') && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onStartTimer(recipe, 3, 'Pré-aquecimento');
-                          }}
-                          className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 transition"
-                        >
-                          <Play className="w-3 h-3 fill-current" /> Timer 3 min Pré-aquecer
-                        </button>
-                      )}
-
-                      {step.toLowerCase().includes('asse por') && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onStartTimer(recipe, recipe.airFryerTimeMinutes, `Assando ${recipe.title}`);
-                          }}
-                          className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 transition"
-                        >
-                          <Play className="w-3 h-3 fill-current" /> Timer Principal ({recipe.airFryerTime})
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Chef Tip Callout */}
-            <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 to-neutral-900 border border-amber-500/40 text-neutral-200 shadow-lg">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0">
-                  <Lightbulb className="w-5 h-5" />
+            {/* Bottom Tip Callout (Matching Bottom of Screenshot 1) */}
+            <div className="bg-[#FDF8F0] border border-[#ECD9C5] rounded-2xl p-4 sm:p-5 flex items-start gap-3.5">
+              <div className="p-2 rounded-xl bg-[#F6E6D3] text-[#C8521A] shrink-0">
+                <Lightbulb className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-serif font-bold text-[#8A4A28] text-sm sm:text-base block">
+                  Dica de Mestre do Chef:
+                </span>
+                <p className="text-xs sm:text-sm text-[#4A3828] mt-0.5 leading-relaxed">
+                  {recipe.chefTip}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 4: Science & Culinary Guidance (Matching Screenshot 2 - "POR QUE ISSO É IMPORTANTE?") */}
+          <div className="pt-8 space-y-4">
+            {/* "Por que isso é importante?" in Sage Green (Screenshot 2) */}
+            <div className="bg-[#F3F7F1] border border-[#CCDBC7] rounded-3xl p-6 sm:p-7">
+              <div className="flex items-center gap-2.5 text-[#3D5A3C] font-bold text-xs uppercase tracking-wider mb-2">
+                <Leaf className="w-4 h-4" />
+                <span>Por que isso é importante?</span>
+              </div>
+              <p className="text-sm sm:text-base text-[#2E452D] leading-relaxed font-medium">
+                {scientificWhyItMatters}
+              </p>
+            </div>
+
+            {/* Dica & Observe Dual Cards (Screenshot 2) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-white border border-[#D5E3D2] rounded-2xl p-4 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#3D5A3C] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <Check className="w-4 h-4 stroke-[3]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-amber-300 text-sm">💡 Dica do Chef</h3>
-                  <p className="text-xs text-neutral-300 leading-relaxed mt-1">
-                    {recipe.chefTip}
+                  <span className="text-xs font-black uppercase tracking-wider text-[#3D5A3C] block">
+                    DICA
+                  </span>
+                  <p className="text-xs sm:text-sm text-[#475569] mt-0.5 leading-relaxed">
+                    Não sobreponha os alimentos na cesta. O ar precisa circular livremente por baixo para que a textura fique uniforme.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white border border-[#EBDCD0] rounded-2xl p-4 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#8A4A28] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <AlertCircle className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-xs font-black uppercase tracking-wider text-[#8A4A28] block">
+                    OBSERVE
+                  </span>
+                  <p className="text-xs sm:text-sm text-[#475569] mt-0.5 leading-relaxed">
+                    Aos {Math.round(recipe.airFryerTimeMinutes / 2)} minutos de preparo, abra a cesta e dê uma leve sacudida para garantir dourado homogêneo.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* User Review & Notes Journal */}
-          <div className="p-6 bg-neutral-900/80">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2 mb-1">
-              <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
-              Sua Avaliação & Anotações de Chef
-            </h2>
-            <p className="text-xs text-neutral-400 mb-4">
-              Avalie este prato e anote seus ajustes pessoais de tempo, temperatura e sabor!
-            </p>
+          {/* Section 5: Review, Notes & Social Share */}
+          <div className="pt-8">
+            <div className="bg-white border border-[#E8DFD5] rounded-3xl p-6 sm:p-7 shadow-sm">
+              <h2 className="font-serif text-xl font-bold text-[#0F2942] mb-1 flex items-center gap-2">
+                <Star className="w-5 h-5 text-[#E59819] fill-[#E59819]" />
+                Avaliação & Caderno de Notas Pessoal
+              </h2>
+              <p className="text-xs text-[#64748B] mb-5">
+                Avalie esta receita e anote adaptações da sua cozinha (tempo na sua air fryer, marcas preferidas, temperos extras).
+              </p>
 
-            <form onSubmit={handleSaveReviewSubmit} className="space-y-4">
-              {/* Star selector */}
-              <div>
-                <span className="block text-xs font-semibold text-neutral-300 mb-2">Quantas estrelas você dá a este prato?</span>
-                <div className="flex items-center gap-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setRating(star)}
-                      onMouseEnter={() => setHoverRating(star)}
-                      onMouseLeave={() => setHoverRating(null)}
-                      aria-label={`Avaliar com ${star} estrelas`}
-                      className="p-1 transition-transform hover:scale-110 focus:outline-none"
-                    >
-                      <Star
-                        className={`w-7 h-7 ${
-                          (hoverRating !== null ? star <= hoverRating : star <= rating)
-                            ? 'text-amber-400 fill-amber-400'
-                            : 'text-neutral-700'
-                        }`}
-                      />
-                    </button>
-                  ))}
-                  <span className="ml-2 text-sm font-bold text-amber-400">
-                    {hoverRating !== null ? hoverRating : rating} de 5 estrelas
-                  </span>
+              <form onSubmit={handleSaveReviewSubmit} className="space-y-4">
+                {/* 5-Star Rating Buttons */}
+                <div>
+                  <label className="block text-xs font-bold text-[#0F2942] uppercase tracking-wider mb-2">
+                    Sua nota para esta receita:
+                  </label>
+                  <div className="flex items-center gap-1.5">
+                    {[1, 2, 3, 4, 5].map((s) => {
+                      const isFilled = (hoverRating !== null ? hoverRating : rating) >= s;
+                      return (
+                        <button
+                          key={s}
+                          type="button"
+                          onMouseEnter={() => setHoverRating(s)}
+                          onMouseLeave={() => setHoverRating(null)}
+                          onClick={() => setRating(s)}
+                          className="p-1 text-2xl transition hover:scale-110"
+                          aria-label={`Avaliar com ${s} estrelas`}
+                        >
+                          <Star className={`w-7 h-7 ${isFilled ? 'fill-[#E59819] text-[#E59819]' : 'text-[#CBD5E1]'}`} />
+                        </button>
+                      );
+                    })}
+                    <span className="ml-3 font-bold text-[#0F2942] text-sm">
+                      {rating} de 5 estrelas
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Personal notes */}
-              <div>
-                <label htmlFor="chef-notes" className="block text-xs font-semibold text-neutral-300 mb-1.5">
-                  Minhas Notas de Preparo (visível apenas para você):
-                </label>
-                <textarea
-                  id="chef-notes"
-                  rows={3}
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Ex: Na minha Air Fryer 180°C por 7 minutos foi o ponto perfeito. Adicionei um toque de orégano fresco no final..."
-                  className="w-full bg-neutral-850 border border-neutral-750 rounded-xl p-3 text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-amber-500"
-                />
-              </div>
+                {/* Notes Input */}
+                <div>
+                  <label htmlFor="chef-notes" className="block text-xs font-bold text-[#0F2942] uppercase tracking-wider mb-1.5">
+                    Suas anotações pessoais do prato:
+                  </label>
+                  <textarea
+                    id="chef-notes"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Ex: Ficou perfeito em 7 minutos a 180°C. Na próxima vez vou adicionar uma pitada de noz-moscada..."
+                    rows={3}
+                    className="w-full bg-[#FAF7F2] border border-[#E2D8CC] focus:border-[#C8521A] rounded-2xl p-3.5 text-sm text-[#0F2942] placeholder-[#94A3B8] focus:outline-none focus:bg-white transition"
+                  />
+                </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="submit"
-                  className="py-2.5 px-5 rounded-xl text-xs sm:text-sm font-bold bg-neutral-800 hover:bg-neutral-750 text-amber-400 border border-amber-500/30 transition active:scale-95"
-                >
-                  Salvar Avaliação & Notas
-                </button>
+                <div className="flex items-center justify-between gap-3 pt-2">
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#0F2942] hover:bg-[#1E3A5A] text-white transition active:scale-95 shadow-md shadow-[#0F2942]/10"
+                  >
+                    Salvar Avaliação & Notas
+                  </button>
 
-                {savedNoteMessage && (
-                  <span className="text-xs text-emerald-400 flex items-center gap-1 font-medium animate-fadeIn">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Avaliação salva com sucesso!
-                  </span>
-                )}
-              </div>
-            </form>
+                  {savedNoteMessage && (
+                    <span className="text-xs font-bold text-[#3D5A3C] flex items-center gap-1 animate-fadeIn">
+                      <Check className="w-4 h-4" />
+                      Anotação salva com sucesso!
+                    </span>
+                  )}
+                </div>
+              </form>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

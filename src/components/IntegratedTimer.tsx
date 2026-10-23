@@ -63,19 +63,19 @@ export const IntegratedTimer: React.FC<IntegratedTimerProps> = ({
 
   return (
     <div 
-      className={`fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-96 z-40 rounded-2xl shadow-2xl transition-all duration-300 border ${
+      className={`fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-96 z-40 rounded-3xl shadow-2xl transition-all duration-300 border ${
         completed
-          ? 'bg-amber-950/95 border-amber-400 text-white animate-bounce'
-          : 'bg-neutral-900/95 backdrop-blur-md border-neutral-750 text-neutral-100'
-      } p-4`}
+          ? 'bg-[#FAF0E6] border-[#C8521A] text-[#0F2942] animate-bounce'
+          : 'bg-white/95 backdrop-blur-md border-[#E5DACD] text-[#0F2942]'
+      } p-5`}
       role="region"
       aria-label="Cronômetro de preparo ativo"
     >
       {/* Progress Bar Top */}
-      <div className="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden mb-3">
+      <div className="w-full bg-[#F5ECE0] h-2 rounded-full overflow-hidden mb-3.5 border border-[#EADCCE]">
         <div 
           className={`h-full transition-all duration-300 ${
-            completed ? 'bg-amber-400' : 'bg-gradient-to-r from-amber-500 to-orange-500'
+            completed ? 'bg-[#3D5A3C]' : 'bg-gradient-to-r from-[#C8521A] to-[#E2692D]'
           }`}
           style={{ width: `${percent}%` }}
         />
@@ -83,23 +83,23 @@ export const IntegratedTimer: React.FC<IntegratedTimerProps> = ({
 
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-400 truncate">
-            <Flame className="w-3.5 h-3.5 shrink-0" />
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#C8521A] truncate">
+            <Flame className="w-4 h-4 shrink-0" />
             <button
               onClick={() => onSelectRecipe?.(timer.recipeId)}
-              className="hover:underline truncate text-left"
+              className="hover:underline truncate text-left font-serif text-sm"
               title="Ver detalhes da receita"
             >
               {timer.recipeTitle}
             </button>
           </div>
-          <p className="text-xs text-neutral-400 truncate mt-0.5">{timer.label}</p>
+          <p className="text-xs text-[#64748B] truncate mt-0.5">{timer.label}</p>
         </div>
 
         <div className="flex items-center gap-2">
           <div className="text-right">
             <span className={`text-2xl font-mono font-black tracking-tight ${
-              completed ? 'text-amber-300 animate-pulse' : 'text-white'
+              completed ? 'text-[#C8521A] animate-pulse' : 'text-[#0F2942]'
             }`}>
               {formatTimerDisplay(timer.remainingSeconds)}
             </span>
@@ -108,7 +108,7 @@ export const IntegratedTimer: React.FC<IntegratedTimerProps> = ({
           <button
             onClick={onClose}
             aria-label="Fechar cronômetro"
-            className="p-1 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
+            className="p-1.5 rounded-full text-[#94A3B8] hover:text-[#0F2942] hover:bg-[#F5EFE6] transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -117,14 +117,14 @@ export const IntegratedTimer: React.FC<IntegratedTimerProps> = ({
 
       {/* Finished alert banner */}
       {completed && (
-        <div className="mt-3 py-1.5 px-3 rounded-lg bg-amber-500 text-neutral-950 font-bold text-xs flex items-center justify-between">
+        <div className="mt-3 py-2 px-3.5 rounded-xl bg-[#C8521A] text-white font-bold text-xs flex items-center justify-between shadow-sm">
           <span className="flex items-center gap-1.5">
             <Bell className="w-4 h-4 animate-spin" />
             Tempo esgotado! Verifique sua Air Fryer.
           </span>
           <button
             onClick={onReset}
-            className="underline text-[11px] hover:text-black font-semibold"
+            className="underline text-[11px] hover:text-white/80 font-bold"
           >
             Reiniciar
           </button>
@@ -132,44 +132,37 @@ export const IntegratedTimer: React.FC<IntegratedTimerProps> = ({
       )}
 
       {/* Controls */}
-      <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-800/80">
-        <div className="flex items-center gap-1">
+      <div className="flex items-center justify-between mt-3.5 pt-3 border-t border-[#F0E8DD]">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={onTogglePlay}
             aria-label={timer.isRunning ? 'Pausar cronômetro' : 'Continuar cronômetro'}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition active:scale-95 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition active:scale-95 shadow-xs ${
               timer.isRunning
-                ? 'bg-neutral-800 text-amber-400 hover:bg-neutral-750'
-                : 'bg-amber-600 text-white hover:bg-amber-500'
+                ? 'bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#0F2942] border border-[#E5DACD]'
+                : 'bg-[#C8521A] hover:bg-[#B34514] text-white'
             }`}
           >
-            {timer.isRunning ? (
-              <>
-                <Pause className="w-3.5 h-3.5" /> Pausar
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5 fill-current" /> Continuar
-              </>
-            )}
+            {timer.isRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+            <span>{timer.isRunning ? 'Pausar' : 'Continuar'}</span>
           </button>
 
           <button
-            onClick={onAddMinute}
-            aria-label="Adicionar 1 minuto"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-neutral-800 hover:bg-neutral-750 text-neutral-300 transition"
-            title="+1 Minuto"
+            onClick={onReset}
+            aria-label="Reiniciar cronômetro"
+            className="p-1.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#64748B] hover:text-[#0F2942] border border-[#E5DACD] transition"
+            title="Reiniciar"
           >
-            <Plus className="w-3.5 h-3.5" /> 1 min
+            <RotateCcw className="w-3.5 h-3.5" />
           </button>
         </div>
 
         <button
-          onClick={onReset}
-          aria-label="Reiniciar tempo"
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-neutral-400 hover:text-neutral-200 transition"
+          onClick={onAddMinute}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#C8521A] border border-[#E9D0C1] transition active:scale-95 shadow-xs"
         >
-          <RotateCcw className="w-3.5 h-3.5" /> Zerar
+          <Plus className="w-3.5 h-3.5" />
+          <span>+1 min</span>
         </button>
       </div>
     </div>
