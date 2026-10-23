@@ -1,0 +1,6 @@
+{
+  "name": "Air Fryer Secrets - 60 Receitas Virais",
+  "description": "Aplicativo interativo das 60 receitas virais de Air Fryer com fotos reais, lista de compras automática, cronômetro inteligente com alertas sonoros, favoritos e avaliações.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
