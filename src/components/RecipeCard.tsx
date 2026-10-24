@@ -145,11 +145,11 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={handleTimerClick}
               aria-label={`Iniciar cronômetro de ${recipe.airFryerTimeMinutes} minutos para ${recipe.title}`}
-              className="p-1.5 rounded-lg bg-[#FAF4ED] hover:bg-[#F3E5D4] text-[#C8521A] border border-[#E9D9C8] transition"
+              className="p-2 sm:p-1.5 rounded-xl bg-[#FAF4ED] hover:bg-[#F3E5D4] text-[#C8521A] border border-[#E9D9C8] transition min-w-[36px] min-h-[36px] flex items-center justify-center"
               title="Iniciar Cronômetro Rápido"
             >
               <Timer className="w-4 h-4" />
@@ -158,7 +158,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
             <button
               onClick={handleAddShopping}
               aria-label={`Adicionar ingredientes de ${recipe.title} à lista de compras`}
-              className={`p-1.5 rounded-lg border transition ${
+              className={`p-2 sm:p-1.5 rounded-xl border transition min-w-[36px] min-h-[36px] flex items-center justify-center ${
                 addedToList
                   ? 'bg-[#3D5A3C] text-white border-[#3D5A3C]'
                   : 'bg-[#F2F7F1] hover:bg-[#E3EEE2] text-[#3D5A3C] border-[#D5E5D3]'

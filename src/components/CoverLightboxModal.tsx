@@ -19,35 +19,40 @@ export const CoverLightboxModal: React.FC<CoverLightboxModalProps> = ({ onClose,
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/80 backdrop-blur-md overflow-hidden animate-fadeIn">
       <div 
-        className="relative w-full max-w-4xl bg-[#131B26] border border-[#2A374A] rounded-3xl shadow-2xl overflow-hidden my-auto text-white flex flex-col md:flex-row"
+        className="relative w-full max-w-4xl bg-[#131B26] border-t sm:border border-[#2A374A] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-y-auto text-white flex flex-col md:flex-row max-h-[94vh] sm:max-h-[92vh]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="cover-modal-title"
       >
+        {/* Mobile Pull Bar */}
+        <div className="sm:hidden pt-2.5 pb-1 flex justify-center w-full absolute top-0 left-0 right-0 z-20">
+          <div className="w-12 h-1 bg-white/25 rounded-full" />
+        </div>
+
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Fechar visualização da capa"
-          className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20 transition backdrop-blur-sm"
+          className="absolute top-3 right-3 z-30 p-2.5 rounded-full bg-black/70 hover:bg-black text-white/80 hover:text-white border border-white/20 transition backdrop-blur-sm"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Left Side: Book Cover Presentation with 3D feel */}
-        <div className="md:w-1/2 p-6 sm:p-8 flex items-center justify-center bg-gradient-to-b from-[#1E293B] to-[#0A0F17] relative overflow-hidden">
+        <div className="md:w-1/2 p-6 sm:p-8 pt-8 sm:pt-8 flex items-center justify-center bg-gradient-to-b from-[#1E293B] to-[#0A0F17] relative overflow-hidden shrink-0">
           {/* Subtle warm glow behind cover */}
           <div className="absolute w-72 h-72 bg-[#C8521A]/20 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative group max-w-xs transition-transform duration-300 hover:scale-[1.02]">
+          <div className="relative group max-w-[200px] sm:max-w-xs transition-transform duration-300 hover:scale-[1.02]">
             <img
               src={coverUrl}
               alt="Capa Oficial do Livro: Air Fryer Secrets - 60 Receitas Virais dos EUA que Ninguém no Brasil Conhece"
-              className="w-full h-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-amber-500/30 object-contain ring-1 ring-white/10"
+              className="w-full h-auto max-h-[38vh] sm:max-h-none rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-amber-500/30 object-contain ring-1 ring-white/10"
             />
             {/* Stamp / badge */}
-            <div className="absolute -bottom-3 -right-3 px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[10px] uppercase tracking-wider rounded-full shadow-lg border border-amber-300 flex items-center gap-1">
+            <div className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 px-2.5 py-0.5 sm:px-3 sm:py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[9px] sm:text-[10px] uppercase tracking-wider rounded-full shadow-lg border border-amber-300 flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
               100% Adaptado ao Brasil
             </div>
@@ -55,8 +60,8 @@ export const CoverLightboxModal: React.FC<CoverLightboxModalProps> = ({ onClose,
         </div>
 
         {/* Right Side: Editorial Context & Actions */}
-        <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
+        <div className="md:w-1/2 p-5 sm:p-8 flex flex-col justify-between space-y-5">
+          <div className="space-y-3 sm:space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8521A]/20 border border-[#C8521A]/40 text-[#F97316] text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5" />
               Capa Oficial do Aplicativo

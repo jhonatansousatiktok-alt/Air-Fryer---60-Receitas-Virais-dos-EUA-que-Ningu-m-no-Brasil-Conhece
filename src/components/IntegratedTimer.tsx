@@ -63,11 +63,11 @@ export const IntegratedTimer: React.FC<IntegratedTimerProps> = ({
 
   return (
     <div 
-      className={`fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-96 z-40 rounded-3xl shadow-2xl transition-all duration-300 border ${
+      className={`fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-6 md:w-96 z-40 rounded-3xl shadow-2xl transition-all duration-300 border ${
         completed
           ? 'bg-[#FAF0E6] border-[#C8521A] text-[#0F2942] animate-bounce'
           : 'bg-white/95 backdrop-blur-md border-[#E5DACD] text-[#0F2942]'
-      } p-5`}
+      } p-4 sm:p-5`}
       role="region"
       aria-label="Cronômetro de preparo ativo"
     >

@@ -14,24 +14,29 @@ export const EbookPdfViewerModal: React.FC<EbookPdfViewerModalProps> = ({
   const pdfUrl = '/assets/aistudio/E-book__Air_Fryer_Secrets__60_Receitas_Virais_dos_EUA_que_Ningu_m_no_Brasil_Conhece_4f8047bc.pdf';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/60 backdrop-blur-sm overflow-hidden animate-fadeIn">
       <div 
-        className="relative w-full max-w-4xl bg-[#FCFAF7] border border-[#E8DFD3] rounded-3xl shadow-2xl overflow-hidden my-auto text-[#1E293B] max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-4xl bg-[#FCFAF7] border-t sm:border border-[#E8DFD3] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden text-[#1E293B] h-[94vh] sm:h-auto sm:max-h-[92vh] flex flex-col"
         role="dialog"
         aria-modal="true"
         aria-labelledby="ebook-modal-title"
       >
+        {/* Mobile Pull Bar */}
+        <div className="sm:hidden pt-2.5 pb-1 bg-white/95 flex justify-center">
+          <div className="w-12 h-1 bg-[#D1C7BA] rounded-full" />
+        </div>
+
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#EBE3D7] bg-white/95">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#EBE3D7] bg-white/95">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-[#FAF0E7] text-[#C8521A]">
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <h2 id="ebook-modal-title" className="font-serif text-xl font-bold text-[#0F2942]">
+              <h2 id="ebook-modal-title" className="font-serif text-lg sm:text-xl font-bold text-[#0F2942]">
                 E-book Original: Air Fryer Secrets
               </h2>
-              <p className="text-xs text-[#64748B]">
+              <p className="text-[11px] sm:text-xs text-[#64748B]">
                 60 Receitas Virais dos EUA que Ninguém no Brasil Conhece
               </p>
             </div>

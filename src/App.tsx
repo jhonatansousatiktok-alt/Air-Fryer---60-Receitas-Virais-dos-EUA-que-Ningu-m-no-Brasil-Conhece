@@ -22,6 +22,7 @@ import { ReviewsView } from './components/ReviewsView';
 import { SocialShareModal } from './components/SocialShareModal';
 import { EbookPdfViewerModal } from './components/EbookPdfViewerModal';
 import { CoverLightboxModal } from './components/CoverLightboxModal';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 const FAVORITES_STORAGE_KEY = 'airfryer_secrets_favorites';
 const SHOPPING_STORAGE_KEY = 'airfryer_secrets_shopping';
@@ -260,88 +261,88 @@ export default function App() {
       />
 
       {/* Main Content Area based on Tab */}
-      <main className="flex-1">
+      <main className="flex-1 pb-28 md:pb-16">
         {activeTab === 'recipes' && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
             
             {/* Hero Editorial Banner with Official Book Cover */}
             {!searchQuery && selectedCategory === 'todos' && (
-              <div className="relative rounded-3xl overflow-hidden mb-10 bg-white border border-[#E8DFD5] p-6 sm:p-10 shadow-[0_4px_24px_-4px_rgba(45,30,15,0.06)]">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+              <div className="relative rounded-3xl overflow-hidden mb-8 sm:mb-10 bg-white border border-[#E8DFD5] p-4 sm:p-10 shadow-[0_4px_24px_-4px_rgba(45,30,15,0.06)]">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center relative z-10">
                   
                   {/* Left Column: Editorial Presentation */}
-                  <div className="lg:col-span-8 space-y-4">
+                  <div className="lg:col-span-8 space-y-3.5 sm:space-y-4">
                     {/* Kicker with accent line and dot */}
                     <div>
-                      <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#C8521A] mb-1">
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#C8521A] mb-1">
                         <span>Air Fryer Secrets</span>
                         <span>•</span>
-                        <span>60 Receitas Virais dos EUA</span>
+                        <span>60 Receitas Virais</span>
                         <span>•</span>
                         <span className="text-[#0F2942]">100% Adaptado ao Brasil</span>
                       </div>
 
-                      <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-black text-[#0F2942] tracking-tight leading-tight">
+                      <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-black text-[#0F2942] tracking-tight leading-tight">
                         Acordando a Air Fryer —{' '}
                         <span className="text-[#C8521A]">Pequenos Petiscos com Grandes Sabores</span>
                       </h1>
                     </div>
 
                     {/* Decorative dot and dividing line (exact book motif) */}
-                    <div className="flex items-center gap-2 py-1">
+                    <div className="flex items-center gap-2 py-0.5 sm:py-1">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#C8521A] shrink-0" />
                       <div className="h-[1.5px] bg-[#E8DFD5] w-full" />
                     </div>
 
-                    <p className="text-sm sm:text-base text-[#374151] leading-relaxed">
+                    <p className="text-xs sm:text-base text-[#374151] leading-relaxed">
                       Este é o seu ponto de partida. Antes de mergulharmos em pratos complexos e sobremesas elaboradas, construímos confiança na cozinha. Estas 60 receitas foram testadas a dedo para provar, de forma rápida e visualmente impressionante, que sua Air Fryer é capaz de muito mais do que você imagina.
                     </p>
 
                     {/* 3 Circular Editorial Badges (Exact match to Screenshot 3) */}
-                    <div className="grid grid-cols-3 gap-3 py-3 max-w-lg">
-                      <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-[#FAF5EE] border border-[#E9DDCF]">
-                        <div className="w-10 h-10 rounded-full border border-[#C8521A] text-[#C8521A] flex items-center justify-center mb-1.5 shadow-xs bg-white">
-                          <Clock className="w-5 h-5" />
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3 py-1.5 sm:py-3 max-w-lg">
+                      <div className="flex flex-col items-center text-center p-2 sm:p-3 rounded-2xl bg-[#FAF5EE] border border-[#E9DDCF]">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#C8521A] text-[#C8521A] flex items-center justify-center mb-1 shadow-xs bg-white">
+                          <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
-                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2942]">
+                        <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2942] leading-tight">
                           RÁPIDO E PRÁTICO
                         </span>
                       </div>
 
-                      <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-[#FAF5EE] border border-[#E9DDCF]">
-                        <div className="w-10 h-10 rounded-full border border-[#C8521A] text-[#C8521A] flex items-center justify-center mb-1.5 shadow-xs bg-white">
-                          <Sparkles className="w-5 h-5" />
+                      <div className="flex flex-col items-center text-center p-2 sm:p-3 rounded-2xl bg-[#FAF5EE] border border-[#E9DDCF]">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#C8521A] text-[#C8521A] flex items-center justify-center mb-1 shadow-xs bg-white">
+                          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
-                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2942]">
+                        <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2942] leading-tight">
                           ALTO IMPACTO
                         </span>
                       </div>
 
-                      <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-[#FAF5EE] border border-[#E9DDCF]">
-                        <div className="w-10 h-10 rounded-full border border-[#C8521A] text-[#C8521A] flex items-center justify-center mb-1.5 shadow-xs bg-white">
-                          <Heart className="w-5 h-5" />
+                      <div className="flex flex-col items-center text-center p-2 sm:p-3 rounded-2xl bg-[#FAF5EE] border border-[#E9DDCF]">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#C8521A] text-[#C8521A] flex items-center justify-center mb-1 shadow-xs bg-white">
+                          <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
-                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2942]">
+                        <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2942] leading-tight">
                           MAIS CONFIANÇA
                         </span>
                       </div>
                     </div>
 
                     {/* Bottom Banner (Exact match to Screenshot 3 bottom banner) */}
-                    <div className="bg-[#FAF3EB] border border-[#ECD9C6] rounded-2xl p-4 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-[#C8521A] text-white flex items-center justify-center shrink-0 shadow-xs">
-                        <Lightbulb className="w-5 h-5" />
+                    <div className="bg-[#FAF3EB] border border-[#ECD9C6] rounded-2xl p-3 sm:p-4 flex items-center gap-2.5 sm:gap-3">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#C8521A] text-white flex items-center justify-center shrink-0 shadow-xs">
+                        <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
-                      <span className="font-serif font-bold text-sm sm:text-base text-[#8A4A28]">
+                      <span className="font-serif font-bold text-xs sm:text-base text-[#8A4A28] leading-tight">
                         Cada receita é um passo para você dominar sua Air Fryer.
                       </span>
                     </div>
 
                     {/* Action buttons */}
-                    <div className="flex flex-wrap items-center gap-3 pt-2">
+                    <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 pt-1">
                       <button
                         onClick={() => setShowEbookModal(true)}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#0F2942] hover:bg-[#1E3A5A] text-white transition active:scale-95 shadow-md shadow-[#0F2942]/15"
+                        className="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 px-4 py-3 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#0F2942] hover:bg-[#1E3A5A] text-white transition active:scale-95 shadow-md shadow-[#0F2942]/15 min-h-[44px]"
                       >
                         <BookOpen className="w-4 h-4 text-[#E2692D]" />
                         Acessar Livro em PDF
@@ -349,7 +350,7 @@ export default function App() {
 
                       <button
                         onClick={() => setShowCoverModal(true)}
-                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#FAF0E7] hover:bg-[#F5E2D3] text-[#C8521A] border border-[#E9CABE] transition active:scale-95 shadow-xs"
+                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#FAF0E7] hover:bg-[#F5E2D3] text-[#C8521A] border border-[#E9CABE] transition active:scale-95 shadow-xs min-h-[44px]"
                       >
                         <Sparkles className="w-4 h-4" />
                         Ver Capa Oficial
@@ -357,7 +358,7 @@ export default function App() {
 
                       <button
                         onClick={() => setSelectedCategory('contrastes')}
-                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#0F2942] border border-[#E5DACD] transition shadow-xs"
+                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-[#FAF5EE] hover:bg-[#F2E8DC] text-[#0F2942] border border-[#E5DACD] transition shadow-xs min-h-[44px]"
                       >
                         <span>Capítulo 2</span>
                         <ArrowRight className="w-4 h-4 text-[#C8521A]" />
@@ -369,7 +370,7 @@ export default function App() {
                   <div className="lg:col-span-4 flex flex-col items-center">
                     <div 
                       onClick={() => setShowCoverModal(true)}
-                      className="group cursor-pointer relative max-w-[260px] sm:max-w-[280px] transition-transform duration-300 hover:-translate-y-1"
+                      className="group cursor-pointer relative max-w-[210px] sm:max-w-[260px] transition-transform duration-300 hover:-translate-y-1"
                       title="Clique para ampliar a capa oficial"
                     >
                       {/* Ambient background glow */}
@@ -394,7 +395,7 @@ export default function App() {
                       </div>
 
                       {/* Badge underneath */}
-                      <div className="mt-3 flex items-center justify-center gap-1.5 text-xs font-bold text-[#0F2942]">
+                      <div className="mt-2.5 flex items-center justify-center gap-1.5 text-xs font-bold text-[#0F2942]">
                         <span className="w-2 h-2 rounded-full bg-[#C8521A] animate-pulse" />
                         <span>Capa Oficial do Livro</span>
                         <span className="text-[#94A3B8]">• 60 Receitas</span>
@@ -407,19 +408,39 @@ export default function App() {
             )}
 
             {/* Chapters Navigation Tabs Ribbon */}
-            <div className="space-y-4 mb-8 bg-white border border-[#E8DFD5] rounded-3xl p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)]">
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 bg-white border border-[#E8DFD5] rounded-3xl p-4 sm:p-6 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)]">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 sm:gap-2.5">
                   <Flame className="w-5 h-5 text-[#C8521A]" />
-                  <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#0F2942]">Navegar por Capítulos do Livro</h2>
+                  <h2 className="font-serif text-lg sm:text-2xl font-bold text-[#0F2942]">Navegar por Capítulos</h2>
                 </div>
                 <span className="text-xs text-[#64748B] font-bold">
-                  {filteredRecipes.length} receitas visíveis
+                  {filteredRecipes.length} receitas
                 </span>
               </div>
 
+              {/* Mobile Chapter Select Dropdown */}
+              <div className="sm:hidden">
+                <label htmlFor="mobile-chapter-select" className="sr-only">Filtrar por Capítulo</label>
+                <div className="relative">
+                  <select
+                    id="mobile-chapter-select"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full bg-[#FAF7F2] border border-[#E5DACD] text-[#0F2942] font-bold text-xs rounded-xl py-3 pl-3.5 pr-9 appearance-none focus:outline-none focus:border-[#C8521A] shadow-xs"
+                  >
+                    {CHAPTERS_INFO.map((chap) => (
+                      <option key={chap.id} value={chap.id}>
+                        {chap.title} ({chap.badge})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 text-[#8A4A28] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+              </div>
+
               {/* Category Filter Pills (Styled like warm segmented book tabs) */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar -mx-1 px-1">
                 {CHAPTERS_INFO.map((chap) => {
                   const isSelected = selectedCategory === chap.id;
 
@@ -738,6 +759,16 @@ export default function App() {
           const r = RECIPES_DATA.find((item) => item.id === recipeId);
           if (r) setSelectedRecipe(r);
         }}
+      />
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileBottomNav
+        activeTab={activeTab}
+        onSelectTab={setActiveTab}
+        favoritesCount={favorites.length}
+        shoppingCount={shoppingList.length}
+        reviewsCount={Object.keys(reviews).length}
+        onOpenCover={() => setShowCoverModal(true)}
       />
     </div>
   );

@@ -97,17 +97,22 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
     : `O fluxo de ar quente a ${recipe.temperature}°C desidrata a superfície instantaneamente, criando a reação de Maillard que doura o alimento enquanto preserva a maciez suculenta no interior.`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/60 backdrop-blur-sm overflow-hidden animate-fadeIn">
       <div 
-        className="relative w-full max-w-4xl bg-[#FCFAF7] border border-[#E8DFD3] rounded-3xl shadow-2xl overflow-hidden my-auto text-[#1E293B] max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-4xl bg-[#FCFAF7] border-t sm:border border-[#E8DFD3] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden text-[#1E293B] h-[94vh] sm:h-auto sm:max-h-[92vh] flex flex-col"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-recipe-title"
       >
+        {/* Mobile Pull Bar */}
+        <div className="sm:hidden pt-2.5 pb-1 bg-white/95 flex justify-center">
+          <div className="w-12 h-1 bg-[#D1C7BA] rounded-full" />
+        </div>
+
         {/* Top Editorial Nav Header */}
-        <div className="sticky top-0 z-30 flex items-center justify-between px-6 py-4 bg-white/95 backdrop-blur-md border-b border-[#EBE3D7]">
-          <div className="flex items-center gap-2.5 truncate pr-4">
-            <span className="px-2.5 py-0.5 rounded-md bg-[#FAF0E7] text-[#C8521A] text-xs font-bold border border-[#E9D0C1] shrink-0">
+        <div className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white/95 backdrop-blur-md border-b border-[#EBE3D7]">
+          <div className="flex items-center gap-2 truncate pr-2">
+            <span className="px-2 py-0.5 rounded-md bg-[#FAF0E7] text-[#C8521A] text-xs font-bold border border-[#E9D0C1] shrink-0">
               #{recipe.id}
             </span>
             <span className="text-xs font-semibold text-[#64748B] truncate">
@@ -246,7 +251,7 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
           <div className="pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Left: Ingredients Box */}
-            <div className="lg:col-span-5 bg-white border border-[#E8DFD5] rounded-3xl p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)] space-y-4">
+            <div className="lg:col-span-5 order-last lg:order-first bg-white border border-[#E8DFD5] rounded-3xl p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(45,30,15,0.04)] space-y-4">
               <div className="flex items-center justify-between border-b border-[#F0E7DC] pb-3">
                 <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#0F2942]">
                   Ingredientes:
@@ -301,7 +306,7 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
             </div>
 
             {/* Right: High-Res Real Photo with Circular Dark Stamp Badge */}
-            <div className="lg:col-span-7 relative">
+            <div className="lg:col-span-7 order-first lg:order-last relative">
               <div className="relative rounded-3xl overflow-hidden shadow-lg border border-[#E5DACD] bg-[#FAF5EE] aspect-[4/3]">
                 <img
                   src={recipe.image}
@@ -515,6 +520,34 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
             </div>
           </div>
 
+        </div>
+
+        {/* Sticky Mobile Bottom Quick Action Bar for Cooking */}
+        <div className="sm:hidden sticky bottom-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#E8DFD5] px-4 py-2.5 flex items-center gap-2 shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+          <button
+            onClick={() => onStartTimer(recipe, recipe.airFryerTimeMinutes, `Assando ${recipe.title}`)}
+            className="flex-1 flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl font-bold text-xs bg-[#C8521A] hover:bg-[#B34514] text-white transition active:scale-95 shadow-md shadow-[#C8521A]/20"
+          >
+            <Timer className="w-4 h-4" />
+            <span>Timer ({recipe.airFryerTimeMinutes}m)</span>
+          </button>
+
+          <button
+            onClick={handleAddIngredientsToShopping}
+            className="flex-1 flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl font-bold text-xs bg-[#3D5A3C] hover:bg-[#324B31] text-white transition active:scale-95 shadow-md shadow-[#3D5A3C]/20"
+          >
+            {addedToListNotification ? (
+              <>
+                <Check className="w-4 h-4 text-white" />
+                <span>Adicionado!</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-4 h-4" />
+                <span>+ Lista Compras</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>

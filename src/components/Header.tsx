@@ -121,8 +121,8 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Navigation Tabs Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar border-t border-[#F0E8DD] py-2">
+      {/* Navigation Tabs Bar (Desktop) */}
+      <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar border-t border-[#F0E8DD] py-2">
         <button
           onClick={() => onSelectTab('recipes')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
